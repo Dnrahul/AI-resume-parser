@@ -6,7 +6,6 @@ from resume_parser import ResumeParser
 import tempfile
 import os
 import base64
-parser = ResumeParser()
 # Page configuration
 st.set_page_config(
     page_title="AI Resume Parser",
@@ -48,6 +47,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def main():
+    # Initialize parser
+    parser = ResumeParser()
+    
     # Header
     st.markdown('<h1 class="main-header">🤖 AI Resume Parser</h1>', unsafe_allow_html=True)
     
@@ -79,8 +81,7 @@ def main():
             tmp_file.write(uploaded_file.getvalue())
             tmp_file_path = tmp_file.name
         
-        # Initialize parser
-                # Parse resume
+        # Parse resume
         with st.spinner('🔍 Analyzing resume... This may take a few seconds.'):
             result = parser.parse_resume(tmp_file_path)
         
@@ -90,10 +91,6 @@ def main():
         if not result.get('success', False):
             st.error(f"❌ {result.get('error', 'Unknown error occurred')}")
             st.info("💡 **Tips for better results:**\n- Use text-based PDFs (not scanned images)\n- Ensure the resume has sufficient text content\n- Try a different file format (DOCX often works better)")
-            return
-        
-        if not result.get('success', False):
-            st.error(f"❌ {result.get('error', 'Unknown error occurred')}")
             return
         
         # Display results
