@@ -3,6 +3,7 @@ headless = true
 port = 8501
 enableXsrfProtection = false
 runOnSave = true
+maxUploadSize = 200
 
 [logger]
 level = "error"
@@ -17,3 +18,4 @@ backgroundColor = "#ffffff"
 secondaryBackgroundColor = "#f0f2f6"
 textColor = "#31333d"
 font = "sans serif"
+

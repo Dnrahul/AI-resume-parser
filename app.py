@@ -6,6 +6,33 @@ from resume_parser import ResumeParser
 import tempfile
 import os
 import base64
+
+# Download spacy model on first run
+@st.cache_resource
+def download_spacy_model():
+    """Download spacy model if not available"""
+    try:
+        import spacy
+        try:
+            spacy.load("en_core_web_sm")
+        except OSError:
+            import subprocess
+            import sys
+            try:
+                subprocess.run(
+                    [sys.executable, "-m", "spacy", "download", "en_core_web_sm"],
+                    capture_output=True,
+                    timeout=300,
+                    check=False
+                )
+            except Exception:
+                pass  # Model download failed, will use blank model
+    except Exception:
+        pass
+
+# Download model on startup
+download_spacy_model()
+
 # Page configuration
 st.set_page_config(
     page_title="AI Resume Parser",
