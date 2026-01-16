@@ -1,3 +1,7 @@
+# This file can be used to create a more performant Streamlit deployment.
+# Uncomment the below line and make sure the requirements file is correct
+# Then run: pip install -r requirements.txt
+
 streamlit>=1.28.0
 spacy>=3.8.0
 https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.1/en_core_web_sm-3.8.1-py3-none-any.whl

@@ -4,39 +4,38 @@ import re
 from docx import Document
 import nltk
 import os
-import subprocess
-import sys
+import warnings
 
-# Install spaCy model if not available
-try:
-    import spacy
-    spacy.load("en_core_web_sm")
-except (ImportError, OSError):
-    print("Downloading spaCy model...")
-    subprocess.check_call([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+# Suppress warnings
+warnings.filterwarnings('ignore')
 
 # Download NLTK data with error handling
 try:
     nltk.download('stopwords', quiet=True)
     nltk.download('punkt', quiet=True)
 except Exception as e:
-    print(f"NLTK download warning: {e}")
+    pass  # Silently fail if NLTK download fails
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 class ResumeParser:
     def __init__(self):
+        self.nlp = None
         try:
             self.nlp = spacy.load("en_core_web_sm")
         except OSError:
-            # If model not found, download it
-            os.system("python3 -m spacy download en_core_web_sm")
-            self.nlp = spacy.load("en_core_web_sm")
+            try:
+                # Try alternative model if available
+                import en_core_web_sm
+                self.nlp = en_core_web_sm.load()
+            except (ImportError, OSError):
+                # If model not available, create a blank model
+                self.nlp = spacy.blank("en")
         
         # Initialize stopwords with fallback
         try:
-            self.stop_words = set(stopwords.words('english'))
+            self.stop_words = set(nltk.corpus.stopwords.words('english'))
         except LookupError:
             # If stopwords still not available, use a basic set
             self.stop_words = {'i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 
