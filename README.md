@@ -12,7 +12,7 @@ An AI-powered resume parsing application built with Streamlit that automatically
 - 📊 **Data Visualization**: Interactive charts and statistics
 - 📥 **Export Results**: Download parsed data as CSV or text report
 - 🎯 **NLP-Powered**: Uses spaCy for Named Entity Recognition
-
+## DEMO [https://ai-resume-parser-5f4cncx7tnxvqoftrwmo5m.streamlit.app/](https://ai-resume-parser-5f4cncx7tnxvqoftrwmo5m.streamlit.app/)
 ## Installation
 
 ### Prerequisites
